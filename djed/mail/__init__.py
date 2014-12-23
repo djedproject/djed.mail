@@ -1,5 +1,8 @@
 import logging
-from email.utils import formataddr
+from email.utils import (
+    formataddr,
+    parseaddr,
+)
 
 from pyramid_mailer import get_mailer
 from pyramid_mailer.mailer import (
