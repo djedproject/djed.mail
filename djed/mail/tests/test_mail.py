@@ -26,7 +26,7 @@ class TestMailer(BaseTestCase):
         self.assertIsInstance(mailer, DummyMailer)
 
 
-class TestMessageTemplate(BaseTestCase):
+class TestMailTemplate(BaseTestCase):
 
     def _init_dummy_mailer(self):
         from djed.mail import DummyMailer
@@ -34,9 +34,9 @@ class TestMessageTemplate(BaseTestCase):
         self.config.init_mailer(DummyMailer())
 
     def _make_one(self):
-        from djed.mail import MessageTemplate
+        from djed.mail import MailTemplate
 
-        class Template(MessageTemplate):
+        class Template(MailTemplate):
 
             template = 'djed.mail:tests/test_mail_tmpl.pt'
 

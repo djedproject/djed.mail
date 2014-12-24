@@ -4,21 +4,57 @@ from email.utils import (
     parseaddr,
 )
 
+from pyramid.renderers import render
+
 from pyramid_mailer import get_mailer
+from pyramid_mailer.interfaces import IMailer
 from pyramid_mailer.mailer import (
     DummyMailer,
     Mailer,
 )
-from pyramid_mailer.interfaces import IMailer
-
-from djed.mail.message import (
+from pyramid_mailer.message import (
     Attachment,
     Message,
-    MessageTemplate,
 )
 
 
 log = logging.getLogger('djed.mail')
+
+
+class MailTemplate(Message):
+
+    template = None
+
+    def __init__(self, request, **kwargs):
+        super(MailTemplate, self).__init__()
+        self.__dict__.update(kwargs)
+
+        self.request = request
+        self.settings = request.registry.settings
+
+    def render(self):
+        return render(self.template, self.__dict__, self.request)
+
+    def update(self):
+        if not self.sender:
+            self.sender = self.settings['mail.default_sender']
+
+    def send(self, recipients=None, mailer=None):
+
+        if recipients:
+            self.recipients = recipients
+
+        self.update()
+
+        if self.template:
+            self.body = self.render()
+
+        if mailer is None:
+            mailer = self.request.get_mailer()
+
+        if mailer is not None:
+            mailer.send(self)
+
 
 
 def init_mailer(config, mailer=None):
