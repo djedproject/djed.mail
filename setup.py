@@ -14,7 +14,7 @@ install_requires = [
     'pyramid_tm',
 ]
 
-tests_require = install_requires + [
+tests_require = [
     'nose',
     'pyramid_chameleon',
     'webtest',
@@ -25,7 +25,7 @@ setup(
     name='djed.mail',
     version='0.0',
     description='Pyramid add-on for sending emails from templates',
-    long_description=README + '\n\n' + CHANGES,
+    long_description='\n\n'.join([README, CHANGES]),
     classifiers=[
         "Framework :: Pyramid",
         "Intended Audience :: Developers",
@@ -43,6 +43,8 @@ setup(
     packages=['djed.mail'],
     include_package_data=True,
     install_requires=install_requires,
-    tests_require=tests_require,
+    extras_require={
+        'testing': tests_require,
+    },
     test_suite='nose.collector',
 )
