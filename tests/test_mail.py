@@ -1,4 +1,4 @@
-from base import BaseTestCase
+from .base import BaseTestCase
 
 
 #class Content(object):
@@ -38,7 +38,7 @@ class TestMailTemplate(BaseTestCase):
 
         class Template(MailTemplate):
 
-            template = 'djed.mail:tests/test_mail_tmpl.pt'
+            template = 'tests:test_mail_tmpl.pt'
 
         return Template
         

@@ -27,6 +27,7 @@ class MailTemplate(Message):
 
     def __init__(self, request, **kwargs):
         super(MailTemplate, self).__init__()
+
         self.__dict__.update(kwargs)
 
         self.request = request
@@ -54,7 +55,6 @@ class MailTemplate(Message):
 
         if mailer is not None:
             mailer.send(self)
-
 
 
 def init_mailer(config, mailer=None):
