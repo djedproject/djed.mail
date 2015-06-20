@@ -1,4 +1,4 @@
-from .base import BaseTestCase
+from djed.testing import BaseTestCase
 
 
 #class Content(object):
@@ -6,6 +6,8 @@ from .base import BaseTestCase
 
 
 class TestMailer(BaseTestCase):
+
+    _includes = ('djed.mail', 'pyramid_chameleon')
 
     def test_init_mailer(self):
         from djed.mail import Mailer
@@ -27,6 +29,8 @@ class TestMailer(BaseTestCase):
 
 
 class TestMailTemplate(BaseTestCase):
+
+    _includes = ('djed.mail', 'pyramid_chameleon')
 
     def _init_dummy_mailer(self):
         from djed.mail import DummyMailer
