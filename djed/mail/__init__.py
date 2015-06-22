@@ -33,21 +33,23 @@ class MailTemplate(Message):
         self.request = request
         self.settings = request.registry.settings
 
+        if self.sender is None:
+            self.sender = self.settings['mail.default_sender']
+
     def render(self):
         return render(self.template, self.__dict__, self.request)
 
     def update(self):
-        if not self.sender:
-            self.sender = self.settings['mail.default_sender']
+        pass
 
     def send(self, recipients=None, mailer=None):
 
-        if recipients:
-            self.recipients = recipients
-
         self.update()
 
-        if self.template:
+        if recipients is not None:
+            self.recipients = recipients
+
+        if self.template is not None:
             self.body = self.render()
 
         if mailer is None:
@@ -62,7 +64,7 @@ def init_mailer(config, mailer=None):
     settings = config.registry.settings
     settings['mail.default_sender'] = settings.get('mail.default_sender',
         formataddr(('Site administrator', 'admin@localhost')))
-        
+
     if not mailer:
         mailer = Mailer.from_settings(settings)
 
@@ -76,4 +78,3 @@ def includeme(config):
 
     config.add_directive('init_mailer', init_mailer)
     config.add_request_method(get_mailer, 'get_mailer')
-    

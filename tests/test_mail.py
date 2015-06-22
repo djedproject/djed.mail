@@ -48,12 +48,17 @@ class TestMailTemplate(BaseTestCase):
         
     def test_ctor(self):
 
+        self._init_dummy_mailer()
+
         cls = self._make_one()
         tmpl = cls(self.request, testattr='testattr')
 
         self.assertEqual(tmpl.testattr, 'testattr')
 
     def test_render(self):
+
+        self._init_dummy_mailer()
+
         cls = self._make_one()
 
         tmpl = cls(self.request, name='world')
@@ -67,12 +72,10 @@ class TestMailTemplate(BaseTestCase):
         cls = self._make_one()
 
         tmpl = cls(self.request)
-        tmpl.update()
 
         self.assertEqual(tmpl.sender, self.registry.settings['mail.default_sender'])
 
         tmpl = cls(self.request, sender='test@simiaproject.org')
-        tmpl.update()
 
         self.assertEqual(tmpl.sender, 'test@simiaproject.org')
 
