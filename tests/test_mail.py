@@ -41,7 +41,7 @@ class TestMailTemplate(BaseTestCase):
             template = 'tests:test_mail_tmpl.pt'
 
         return Template
-        
+
     def test_ctor(self):
 
         self._init_dummy_mailer()
@@ -69,7 +69,8 @@ class TestMailTemplate(BaseTestCase):
 
         tmpl = cls(self.request)
 
-        self.assertEqual(tmpl.sender, self.registry.settings['mail.default_sender'])
+        self.assertEqual(
+            tmpl.sender, self.registry.settings['mail.default_sender'])
 
         tmpl = cls(self.request, sender='test@simiaproject.org')
 

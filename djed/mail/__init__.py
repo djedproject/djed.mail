@@ -1,7 +1,7 @@
 import logging
 from email.utils import (
     formataddr,
-    parseaddr,
+    parseaddr,  # flake8: noqa
 )
 
 from pyramid.renderers import render
@@ -9,11 +9,11 @@ from pyramid.renderers import render
 from pyramid_mailer import get_mailer
 from pyramid_mailer.interfaces import IMailer
 from pyramid_mailer.mailer import (
-    DummyMailer,
+    DummyMailer,  # flake8: noqa
     Mailer,
 )
 from pyramid_mailer.message import (
-    Attachment,
+    Attachment,  # flake8: noqa
     Message,
 )
 
@@ -62,14 +62,15 @@ class MailTemplate(Message):
 def init_mailer(config, mailer=None):
 
     settings = config.registry.settings
-    settings['mail.default_sender'] = settings.get('mail.default_sender',
+    settings['mail.default_sender'] = settings.get(
+        'mail.default_sender',
         formataddr(('Site administrator', 'admin@localhost')))
 
     if not mailer:
         mailer = Mailer.from_settings(settings)
 
     config.registry.registerUtility(mailer, IMailer)
-    
+
     log.info("Initialize mailer")
 
 
