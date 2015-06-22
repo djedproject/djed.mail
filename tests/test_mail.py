@@ -1,10 +1,6 @@
 from djed.testing import BaseTestCase
 
 
-#class Content(object):
-#    pass
-
-
 class TestMailer(BaseTestCase):
 
     _includes = ('djed.mail', 'pyramid_chameleon')
